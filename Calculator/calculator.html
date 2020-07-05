@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page Title</title>
+  <meta charset="UTF-8"/>
+  <link rel="stylesheet" type="text/css" href="css/style.css" >
+</head>
+<body>
+    <div id="container">
+        <div id="view"></div>
+
+        <button class="number" id=0 style="top: 270px;left: 10px;">0</button>
+        <button class="number" id=1 style="top: 240px;right: 36px;">1</button>
+        <button class="number" id=2 style="top: 240px;left: 8px;">2</button>
+        <button class="number" id=3 style="top: 240px;left: 48px;">3</button>
+         <button class="number" id=4 style="top: 210px;right: 174px;">4</button>
+         <button class="number" id=5 style="top: 210px;right: 130px;">5</button>
+         <button class="number" id=6 style="top: 210px;right: 90px;">6</button>
+         <button class="number" id=7 style="top: 180px;right: 312px;">7</button>
+         <button class="number" id=8 style="left: 100px;top: 159px;">8</button>
+         <button class="number" id=9 style="top: 160px;left: 140px;">9</button>
+
+         <button class="op" id="*" style="left: 183px;top: 200px;">*</button>
+         <button class="op" id="/" style="left: 135px;top: 150px;">/</button>
+         <button class="op" id="-" style="left: 150px;top: 200px;">-</button> 
+         <button class="op" id="+" style="top: 250px;left: 50px;">+</button>
+         <button class="equals" id="=" style="top: 250px;left: 60px;">=</button>
+         <button class="clear" id="clear" style="padding-left: 0px;padding-right: 0px;top: 1px;left: 36px;"> Clear</button>
+           </div>
+  <script>
+   function add(a,b){
+    return a+b;
+}
+function subtract(a,b){
+    return a-b;
+}
+function multiply(a,b){
+    return a*b;
+}
+function divide(a,b){
+    return a/b;
+}
+function op(a,o,b){
+    if (o=="+"){
+        return(add(a,b))
+    }
+    if(o=="-"){
+        return(subtract(a,b))
+    }
+    if (o=="*"){
+        return( multiply(a,b))
+    }
+    if(o=="/"){
+        return( divide(a,b))
+    }
+    else{
+        return "Operation doesnt exist";
+    }
+    
+  }
+  //Object to Store values
+  var cal={
+    display_value:"",
+    fn:"",
+    sn:"",
+    op:"",
+    outcome:"",
+}
+/// Used to clear Values once displayed
+  function Clear(){
+     cal={
+    display_value:"",
+    fn:"",
+    sn:"",
+    op:"",
+    outcome:"",
+}
+
+  }
+  // function to seperate numbers and op
+  function fn(str){
+      for(item in str){
+          if (isNaN(item)){
+              cal.fn+=item
+          }
+          else{
+              break;
+              cal.op=item
+          }
+
+      }
+  }
+
+function display(){
+    const digits= document.querySelectorAll(".number")
+    const operations=document.querySelectorAll(".op")
+    const equals=document.querySelector(".equals")
+    const clear=document.querySelector(".clear")
+    var view=document.querySelector("#view")
+    digits.forEach(digit=>{digit.addEventListener("click",function(e){
+        if(cal.op==""||cal.outcome!=""){
+        
+        view.textContent+=digit.textContent
+        cal.display_value=view.textContent
+        cal.fn+=e.target.id
+        console.log(e.target.id)
+        console.log(cal)
+        }
+        else{
+        
+        view.textContent+=e.target.id
+        cal.display_value=view.textContent
+        cal.sn+=e.target.id
+        console.log(e.target.id)
+        console.log(cal)
+
+        }
+        
+        
+        
+        }
+    )}
+    )
+    operations.forEach(operation=>{
+        operation.addEventListener("click",function(e){
+        view.textContent+=operation.textContent
+        cal.display_value=view.textContent
+        cal.op=e.target.id
+        console.log(e.target.id)
+        console.log(cal)
+    })
+    
+
+}
+
+
+    )
+    clear.addEventListener("click",function(e){
+      Clear();
+      view.textContent=""
+    }
+    )
+    equals.addEventListener("click",function (e){
+        let x=new Number(cal.fn)
+        let y=new Number(cal.sn)
+        let o=cal.op
+        Clear()
+        view.textContent=`${op(x,o,y)}`
+        cal.fn=`${op(x,o,y)}`
+        
+        
+    })
+}
+
+
+
+display()
+
+console.log(cal.display_value)
+
+
+  </script>
+</body>
+</html>
